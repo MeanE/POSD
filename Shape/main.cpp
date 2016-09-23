@@ -1,4 +1,5 @@
 #include "..\cppunitlite\TestHarness.h"
+#include "UnitShapes.h"
 
 using namespace std;
 
