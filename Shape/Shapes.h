@@ -45,9 +45,9 @@ public:
     /** Triangle
       * Heron's formula
       * use three point to compute area
-      *       1 |ax bx cx ax|
-      *area = - |           |
-      *       2 |ay by cy ay| */
+      *        1 |ax bx cx ax|
+      * area = - |           |
+      *        2 |ay by cy ay| */
     double area() const{
         return abs((ax*by+ bx*cy+ cx*ay)-(ay*bx+ by*cx+ cy*ax))/2;
     }
