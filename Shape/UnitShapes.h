@@ -2,7 +2,11 @@
 #define UNITSHAPES_H_INCLUDED
 
 #include "..\cppunitlite\TestHarness.h"
-#include "Shapes.h"
+#include "Circle.h"
+#include "Rectangle.h"
+#include "Triangle.h"
+#include "Compute.h"
+using namespace std;
 
 const double EPSLION=0.000001;
 TEST (first, Circle) {
@@ -29,13 +33,15 @@ TEST (thrid, Triangle) {
     //FAIL("123456");
 }
 
-TEST (fourth, sumOfPerimeter) {
+TEST (fourth, Compute) {
+    Compute cpt;
+
     Triangle tri(1,-1, 4,-1, 4,3);
     Rectangle rect(0,0, 2,5);
     Circle cir(0,0, 10);
     vector<Shape*> shp{&tri, &rect, &cir};
 
-    DOUBLES_EQUAL(330.15926, sumOfPerimeter(shp), EPSLION);
+    DOUBLES_EQUAL(330.15926, cpt.sumOfPerimeter(shp), EPSLION);
     //FAIL("123456");
 }
 
