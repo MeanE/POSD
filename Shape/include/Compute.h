@@ -9,6 +9,7 @@ class Compute
 public:
     double sumOfPerimeter (std::vector<Shape*> &) const;
     Shape* maxArea(std::vector<Shape*> &) const;
+    void sortByDecreasingPerimeter(std::vector<Shape*> &);
 };
 
 #endif // COMPUTE_H

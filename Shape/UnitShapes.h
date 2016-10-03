@@ -79,5 +79,32 @@ TEST (Compute_maxArea, Compute) {
     //FAIL("123456");
 }
 
+TEST (Compute_sortByDecreasingPerimeter, Compute) {
+    Compute cpt;
 
+    Triangle tri(1,-1, 4,-1, 4,3, "tri1"); //12
+    Rectangle rect(0,0, 2,5, "rect1"); //14
+    Rectangle rect2(0,0, 20,20, "rect2"); //80
+    Circle cir(0,0, 10, "cir1"); //62.831852
+    vector<Shape*> shp{&tri, &rect, &rect2, &cir};
+
+    cpt.sortByDecreasingPerimeter(shp);
+
+    CHECK("rect2" == shp[0]->getName());
+    DOUBLES_EQUAL(80, shp[0]->perimeter(), EPSLION);
+    CHECK(&rect2 == shp[0]);
+
+    CHECK("cir1" == shp[1]->getName());
+    DOUBLES_EQUAL(62.831852, shp[1]->perimeter(), EPSLION);
+    CHECK(&cir == shp[1]);
+
+    CHECK("rect1" == shp[2]->getName());
+    DOUBLES_EQUAL(14, shp[2]->perimeter(), EPSLION);
+    CHECK(&rect == shp[2]);
+
+    CHECK("tri1" == shp[3]->getName());
+    DOUBLES_EQUAL(12, shp[3]->perimeter(), EPSLION);
+    CHECK(&tri == shp[3]);
+    //FAIL("123456");
+}
 #endif // UNITSHAPES_H_INCLUDED
