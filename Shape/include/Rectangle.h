@@ -6,13 +6,13 @@
 class Rectangle : public Shape
 {
 public:
-    Rectangle(double, double, double, double);
+    Rectangle(double, double, double, double, std::string name="unknown");
 
     double area() const;
     double perimeter() const;
 
 private:
-    double x,y,l,w;
+    double _x, _y, _length, _width;
 };
 
 #endif // RECTANGLE_H

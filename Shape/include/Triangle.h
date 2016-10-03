@@ -6,7 +6,7 @@
 class Triangle : public Shape
 {
 public:
-    Triangle(double, double, double, double, double, double);
+    Triangle(double, double, double, double, double, double, std::string name="unknown");
 
     bool getIsTriangle() const;
 
@@ -15,8 +15,8 @@ public:
     void isTriangle();
 
 private:
-    double ax,ay,bx,by,cx,cy;
-    bool isTriangleChecked=false, trueTriangle;
+    double _ax, _ay, _bx, _by, _cx, _cy;
+    bool _isTriangleChecked=false, _trueTriangle;
 };
 
 #endif // TRIANGLE_H

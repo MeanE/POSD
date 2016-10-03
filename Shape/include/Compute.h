@@ -8,6 +8,7 @@ class Compute
 {
 public:
     double sumOfPerimeter (std::vector<Shape*> &) const;
+    Shape* maxArea(std::vector<Shape*> &) const;
 };
 
 #endif // COMPUTE_H
