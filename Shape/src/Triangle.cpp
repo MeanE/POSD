@@ -20,22 +20,24 @@ double Triangle::area() const{
 }
 
 double Triangle::perimeter() const{
-    double abLength=sqrt(pow(_ax-_bx,2) + pow(_ay-_by,2));
-    double acLength=sqrt(pow(_ax-_cx,2) + pow(_ay-_cy,2));
-    double bcLength=sqrt(pow(_bx-_cx,2) + pow(_by-_cy,2));
+    double abLength=sqrt(pow(_ax-_bx, 2) + pow(_ay-_by, 2));
+    double acLength=sqrt(pow(_ax-_cx, 2) + pow(_ay-_cy, 2));
+    double bcLength=sqrt(pow(_bx-_cx, 2) + pow(_by-_cy, 2));
 
     return abLength+ acLength+ bcLength;
 }
 
 void Triangle::isTriangle(){
     if(!_isTriangleChecked){
-        /** Slope = (y1-y2) / (x1-x2) */
-        double abSlope=(_ay-_by) / (_ax-_bx);
-        double acSlope=(_ay-_cy) / (_ax-_cx);
-        double bcSlope=(_by-_cy) / (_bx-_cx);
+        double abLength=sqrt(pow(_ax-_bx, 2) + pow(_ay-_by, 2));
+        double acLength=sqrt(pow(_ax-_cx, 2) + pow(_ay-_cy, 2));
+        double bcLength=sqrt(pow(_bx-_cx, 2) + pow(_by-_cy, 2));
 
-        _trueTriangle=(abSlope!=acSlope) && (abSlope!=bcSlope) && (acSlope!=bcSlope);
+        _trueTriangle=(abLength+acLength > bcLength) &&
+                      (abLength+bcLength > acLength) &&
+                      (acLength+bcLength > abLength);
 
         _isTriangleChecked=true;
     }
 }
+
