@@ -2,37 +2,41 @@
 #include <cmath>
 using namespace std;
 
-Triangle::Triangle(double x1, double y1, double x2, double y2, double x3, double y3):
-        ax(x1),ay(y1),bx(x2),by(y2),cx(x3),cy(y3){isTriangle();}
+Triangle::Triangle(double x1, double y1, double x2, double y2, double x3, double y3, string name):
+        _ax(x1), _ay(y1), _bx(x2), _by(y2), _cx(x3), _cy(y3){
+            isTriangle();
+            _name=name;
+}
 
-bool Triangle::getIsTriangle() const{return trueTriangle;}
+bool Triangle::getIsTriangle() const{return _trueTriangle;}
 
-/** Triangle
-  * Heron's formula
+/** Heron's formula
   * use three point to compute area
   *        1 |ax bx cx ax|
   * area = - |           |
   *        2 |ay by cy ay| */
 double Triangle::area() const{
-    return abs((ax*by+ bx*cy+ cx*ay)-(ay*bx+ by*cx+ cy*ax))/2;
+    return abs((_ax*_by+ _bx*_cy+ _cx*_ay)-(_ay*_bx+ _by*_cx+ _cy*_ax))/2;
 }
 
 double Triangle::perimeter() const{
-    double abLength=sqrt(pow(ax-bx,2) + pow(ay-by,2));
-    double acLength=sqrt(pow(ax-cx,2) + pow(ay-cy,2));
-    double bcLength=sqrt(pow(bx-cx,2) + pow(by-cy,2));
+    double abLength=sqrt(pow(_ax-_bx, 2) + pow(_ay-_by, 2));
+    double acLength=sqrt(pow(_ax-_cx, 2) + pow(_ay-_cy, 2));
+    double bcLength=sqrt(pow(_bx-_cx, 2) + pow(_by-_cy, 2));
 
     return abLength+ acLength+ bcLength;
 }
 
 void Triangle::isTriangle(){
-    if(!isTriangleChecked){
-        double abSlope=(ay-by) / (ax-bx);
-        double acSlope=(ay-cy) / (ax-cx);
-        double bcSlope=(by-cy) / (bx-cx);
+    if(!_isTriangleChecked){
+        /** Slope = (y1-y2) / (x1-x2) */
+        double abSlope=(_ay-_by) / (_ax-_bx);
+        double acSlope=(_ay-_cy) / (_ax-_cx);
+        double bcSlope=(_by-_cy) / (_bx-_cx);
 
-        trueTriangle=(abSlope!=acSlope) && (abSlope!=bcSlope) && (acSlope!=bcSlope);
+        _trueTriangle=(abSlope!=acSlope) && (abSlope!=bcSlope) && (acSlope!=bcSlope);
 
-        isTriangleChecked=true;
+        _isTriangleChecked=true;
     }
 }
+

@@ -6,13 +6,13 @@
 class Circle : public Shape
 {
 public:
-    Circle(double, double, double);
+    Circle(double, double, double, std::string name="unknown");
 
     double area() const;
     double perimeter() const;
 
 private:
-    double cx,cy,r;
+    double _cx, _cy, _radius;
 };
 
 #endif // CIRCLE_H

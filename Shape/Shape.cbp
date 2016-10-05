@@ -38,25 +38,27 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="UnitShapes.h">
-			<Option compile="1" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="include/Circle.h">
-			<Option compile="1" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="include/Compose.h" />
 		<Unit filename="include/Compute.h">
-			<Option compile="1" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="include/Rectangle.h">
-			<Option compile="1" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="include/Shape.h">
-			<Option compile="1" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="include/Triangle.h">
-			<Option compile="1" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Circle.cpp" />
+		<Unit filename="src/Compose.cpp" />
 		<Unit filename="src/Compute.cpp" />
 		<Unit filename="src/Rectangle.cpp" />
 		<Unit filename="src/Shape.cpp" />
