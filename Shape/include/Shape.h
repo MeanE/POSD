@@ -2,6 +2,7 @@
 #define SHAPE_H
 
 #include <string>
+using namespace std;
 
 class Shape
 {

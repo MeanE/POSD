@@ -6,6 +6,7 @@
 #include "Rectangle.h"
 #include "Triangle.h"
 #include "Compute.h"
+#include "Compose.h"
 //#include <iostream>
 using namespace std;
 
@@ -45,9 +46,11 @@ TEST (Triangle_first, Triangle) {
 TEST (Triangle_isTriangle, Triangle) {
     Triangle tri(1,-1, 4,-1, 4,3); //trueTriangle
     Triangle tri2(1,-1, 1,-1, 1,3); //falseTriangle
+    Triangle tri3(0,0, 1,1, 3,3); //falseTriangle
 
     CHECK_EQUAL(true, tri.getIsTriangle());
     CHECK_EQUAL(false, tri2.getIsTriangle());
+    CHECK_EQUAL(false, tri3.getIsTriangle());
     //FAIL("123456");
 }
 
@@ -63,6 +66,18 @@ TEST (Compute_sumOfPerimeter, Compute) {
     //FAIL("123456");
 }
 
+TEST (Compute_sumOfArea, Compute) {
+    Compute cpt;
+
+    Triangle tri(1,-1, 4,-1, 4,3); //6
+    Rectangle rect(0,0, 2,5); //10
+    Circle cir(0,0, 10); //314.15926
+    vector<Shape*> shp{&tri, &rect, &cir};
+
+    DOUBLES_EQUAL(330.15926, cpt.sumOfArea(shp), EPSLION);
+    //FAIL("123456");
+}
+
 TEST (Compute_maxArea, Compute) {
     Compute cpt;
 
@@ -72,7 +87,7 @@ TEST (Compute_maxArea, Compute) {
     vector<Shape*> shp{&tri, &rect, &cir};
 
     Shape* maxAreaShape = cpt.maxArea(shp);
-    //cout<<maxAreaShape->getName()<<endl;
+
     CHECK("cir1" == maxAreaShape->getName());
     DOUBLES_EQUAL(314.15926, maxAreaShape->area(), EPSLION);
     CHECK(&cir == maxAreaShape);
@@ -105,6 +120,32 @@ TEST (Compute_sortByDecreasingPerimeter, Compute) {
     CHECK("tri1" == shp[3]->getName());
     DOUBLES_EQUAL(12, shp[3]->perimeter(), EPSLION);
     CHECK(&tri == shp[3]);
+    //FAIL("123456");
+}
+
+TEST (Compose_first, Compose) {
+    Compose cop("comboExclamation");
+
+    Triangle tri(1,-1, 4,-1, 4,3, "tMiddle"); //area:6 perimeter:12
+    Rectangle rect(1,10, 2,8, "rTall"); //area:16 perimeter:20
+    Circle cir(2,1, 1, "cSmall"); //area:3.1415926 perimeter:6.2831852
+
+    cop.add(&tri);
+    cop.add(&rect);
+    cop.add(&cir);
+
+    DOUBLES_EQUAL(25.1415926, cop.area(), EPSLION);
+    DOUBLES_EQUAL(38.2831852, cop.perimeter(), EPSLION);
+
+
+    Compose cop2("comboExclamation2");
+    Rectangle rect2(1,10, 1,4, "dWhat"); //area:4 perimeter:10
+    cop2.add(&rect2);
+
+    cop.add(&cop2);
+
+    DOUBLES_EQUAL(29.1415926, cop.area(), EPSLION); //+4
+    DOUBLES_EQUAL(48.2831852, cop.perimeter(), EPSLION); //+10
     //FAIL("123456");
 }
 #endif // UNITSHAPES_H_INCLUDED

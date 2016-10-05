@@ -2,10 +2,18 @@
 #include <algorithm>
 using namespace std;
 
-double Compute::sumOfPerimeter (vector<Shape*> &shp) const{
+double Compute::sumOfPerimeter (const vector<Shape*> &shp) const{
     double sum(0);
-    for(Shape* &sp: shp){
+    for(Shape* sp: shp){
         sum+=sp->perimeter();
+    }
+    return sum;
+}
+
+double Compute::sumOfArea (const vector<Shape*> &shp) const{
+    double sum(0);
+    for(Shape* sp: shp){
+        sum+=sp->area();
     }
     return sum;
 }

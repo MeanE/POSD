@@ -29,13 +29,12 @@ double Triangle::perimeter() const{
 
 void Triangle::isTriangle(){
     if(!_isTriangleChecked){
-        double abLength=sqrt(pow(_ax-_bx, 2) + pow(_ay-_by, 2));
-        double acLength=sqrt(pow(_ax-_cx, 2) + pow(_ay-_cy, 2));
-        double bcLength=sqrt(pow(_bx-_cx, 2) + pow(_by-_cy, 2));
+        /** Slope = (y1-y2) / (x1-x2) */
+        double abSlope=(_ay-_by) / (_ax-_bx);
+        double acSlope=(_ay-_cy) / (_ax-_cx);
+        double bcSlope=(_by-_cy) / (_bx-_cx);
 
-        _trueTriangle=(abLength+acLength > bcLength) &&
-                      (abLength+bcLength > acLength) &&
-                      (acLength+bcLength > abLength);
+        _trueTriangle=(abSlope!=acSlope) && (abSlope!=bcSlope) && (acSlope!=bcSlope);
 
         _isTriangleChecked=true;
     }
