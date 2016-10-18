@@ -37,29 +37,36 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="UnitMedia.h">
+			<Option compile="1" />
+		</Unit>
 		<Unit filename="UnitShapes.h">
-			<Option target="&lt;{~None~}&gt;" />
+			<Option compile="1" />
 		</Unit>
 		<Unit filename="include/Circle.h">
-			<Option target="&lt;{~None~}&gt;" />
+			<Option compile="1" />
 		</Unit>
-		<Unit filename="include/Compose.h" />
+		<Unit filename="include/Compose.h">
+			<Option compile="1" />
+		</Unit>
 		<Unit filename="include/Compute.h">
-			<Option target="&lt;{~None~}&gt;" />
+			<Option compile="1" />
 		</Unit>
+		<Unit filename="include/Media.h" />
 		<Unit filename="include/Rectangle.h">
-			<Option target="&lt;{~None~}&gt;" />
+			<Option compile="1" />
 		</Unit>
 		<Unit filename="include/Shape.h">
-			<Option target="&lt;{~None~}&gt;" />
+			<Option compile="1" />
 		</Unit>
 		<Unit filename="include/Triangle.h">
-			<Option target="&lt;{~None~}&gt;" />
+			<Option compile="1" />
 		</Unit>
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Circle.cpp" />
 		<Unit filename="src/Compose.cpp" />
 		<Unit filename="src/Compute.cpp" />
+		<Unit filename="src/Media.cpp" />
 		<Unit filename="src/Rectangle.cpp" />
 		<Unit filename="src/Shape.cpp" />
 		<Unit filename="src/Triangle.cpp" />
