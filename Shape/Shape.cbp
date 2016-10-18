@@ -43,32 +43,53 @@
 		<Unit filename="UnitShapes.h">
 			<Option compile="1" />
 		</Unit>
+		<Unit filename="include/AreaVisitor.h">
+			<Option compile="1" />
+		</Unit>
 		<Unit filename="include/Circle.h">
 			<Option compile="1" />
 		</Unit>
-		<Unit filename="include/Compose.h">
+		<Unit filename="include/ComboMedia.h">
 			<Option compile="1" />
 		</Unit>
 		<Unit filename="include/Compute.h">
 			<Option compile="1" />
 		</Unit>
-		<Unit filename="include/Media.h" />
+		<Unit filename="include/Media.h">
+			<Option compile="1" />
+		</Unit>
+		<Unit filename="include/MediaVisitor.h">
+			<Option compile="1" />
+		</Unit>
+		<Unit filename="include/Medias.h" />
+		<Unit filename="include/PerimeterVisitor.h">
+			<Option compile="1" />
+		</Unit>
 		<Unit filename="include/Rectangle.h">
 			<Option compile="1" />
 		</Unit>
 		<Unit filename="include/Shape.h">
 			<Option compile="1" />
 		</Unit>
+		<Unit filename="include/ShapeMedia.h">
+			<Option compile="1" />
+		</Unit>
+		<Unit filename="include/Shapes.h" />
 		<Unit filename="include/Triangle.h">
 			<Option compile="1" />
 		</Unit>
+		<Unit filename="include/Visitors.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/AreaVisitor.cpp" />
 		<Unit filename="src/Circle.cpp" />
-		<Unit filename="src/Compose.cpp" />
+		<Unit filename="src/ComboMedia.cpp" />
 		<Unit filename="src/Compute.cpp" />
 		<Unit filename="src/Media.cpp" />
+		<Unit filename="src/MediaVisitor.cpp" />
+		<Unit filename="src/PerimeterVisitor.cpp" />
 		<Unit filename="src/Rectangle.cpp" />
 		<Unit filename="src/Shape.cpp" />
+		<Unit filename="src/ShapeMedia.cpp" />
 		<Unit filename="src/Triangle.cpp" />
 		<Extensions>
 			<code_completion />
