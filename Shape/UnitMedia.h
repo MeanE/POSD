@@ -47,13 +47,17 @@ TEST (AreaVisitor, ComboMedia) {
     ShapeMedia t1(&tri1);
     ShapeMedia t2(&tri2);
 
-    ComboMedia cm;
-    cm.add(&r1);
-    cm.add(&t1);
-    cm.add(&t2);
+    /**Combo(rectangle,triangle)*/
+    ComboMedia cRT;
+    cRT.add(&r1);
+    cRT.add(&t1);
+    /**Combo(Combo,triangle)*/
+    ComboMedia cCT;
+    cCT.add(&cRT);
+    cCT.add(&t2);
 
     AreaVisitor av;
-    cm.accept(&av);
+    cCT.accept(&av);
 
     DOUBLES_EQUAL(10.3923048454, av.getArea(), EPSLION_IN_UNITMEDIA);
 }
@@ -67,13 +71,17 @@ TEST (PerimeterVisitor, ComboMedia) {
     ShapeMedia t1(&tri1);
     ShapeMedia t2(&tri2);
 
-    ComboMedia cm;
-    cm.add(&r1);
-    cm.add(&t1);
-    cm.add(&t2);
+    /**Combo(rectangle,triangle)*/
+    ComboMedia cRT;
+    cRT.add(&r1);
+    cRT.add(&t1);
+    /**Combo(Combo,triangle)*/
+    ComboMedia cCT;
+    cCT.add(&cRT);
+    cCT.add(&t2);
 
     PerimeterVisitor pv;
-    cm.accept(&pv);
+    cCT.accept(&pv);
 
     DOUBLES_EQUAL(25.8564064605, pv.getPerimeter(), EPSLION_IN_UNITMEDIA);
 }
