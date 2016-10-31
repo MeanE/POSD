@@ -5,7 +5,7 @@
 #include "Shapes.h"
 #include "Medias.h"
 #include "Visitors.h"
-
+#include <iostream>
 using namespace std;
 
 const double EPSLION_IN_UNITMEDIA=0.000001;
@@ -86,4 +86,23 @@ TEST (PerimeterVisitor, ComboMedia) {
     DOUBLES_EQUAL(25.8564064605, pv.getPerimeter(), EPSLION_IN_UNITMEDIA);
 }
 
+TEST (DescriptionVisitor, ShapeMedia) {
+    Rectangle rect(0,0, 4,8);
+    ShapeMedia r1(&rect);
+    Circle cir(-2,1, 2);
+    ShapeMedia c1(&cir);
+    Triangle tri(1,-1, 4,-1, 4,3);
+    ShapeMedia t1(&tri);
+
+    DescriptionVisitor dv1;
+    r1.accept(&dv1);
+    DescriptionVisitor dv2;
+    c1.accept(&dv2);
+    DescriptionVisitor dv3;
+    t1.accept(&dv3);
+
+    string descriptions = dv1.getDescription() + dv2.getDescription() + dv3.getDescription();
+
+    CHECK("r(0 0 4 8) c(-2 1 2) t(1 -1 4 -1 4 3) " == descriptions);
+}
 #endif // UNITMEDIA_H_INCLUDED

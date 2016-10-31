@@ -1,4 +1,5 @@
 #include "Rectangle.h"
+#include <sstream>
 using namespace std;
 
 Rectangle::Rectangle(double leftTopX, double leftTopY, double length, double width, string name):
@@ -6,3 +7,8 @@ Rectangle::Rectangle(double leftTopX, double leftTopY, double length, double wid
 
 double Rectangle::area() const{return _length*_width;}
 double Rectangle::perimeter() const{return 2*(_length+_width);}
+string Rectangle::description() const {
+    stringstream ss;
+    ss << "r(" << _x << " " << _y << " " << _length << " " << _width << ") ";
+    return ss.str();
+}

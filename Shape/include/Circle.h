@@ -10,6 +10,7 @@ public:
 
     double area() const;
     double perimeter() const;
+    string description() const;
 
 private:
     double _cx, _cy, _radius;
