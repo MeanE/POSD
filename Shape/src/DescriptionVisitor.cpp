@@ -11,3 +11,7 @@ void DescriptionVisitor::visitShapeMedia(ShapeMedia* shapeMedia){
 void DescriptionVisitor::visitComboMedia(ComboMedia* comboMedia){
     _description = comboMedia->description();
 }
+
+void DescriptionVisitor::visitTextMedia(TextMedia* textMedia){
+    _description += textMedia->description();
+}

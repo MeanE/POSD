@@ -212,6 +212,12 @@ TEST (buildComboMedia2, ComboMediaBuilder) {
 }
 
 TEST (getText, TextMedia) {
+    Text text(new Rectangle(0,0, 4,3), "HW4-3");
+    TextMedia tm(&text);
 
+    DescriptionVisitor dv;
+    tm.accept(&dv);
+
+    CHECK("text(r(0 0 4 3) content(HW4-3)) " == dv.getDescription());
 }
 #endif // UNITMEDIA_H_INCLUDED

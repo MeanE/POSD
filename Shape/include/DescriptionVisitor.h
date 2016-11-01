@@ -5,6 +5,7 @@
 #include "MediaVisitor.h"
 #include "ShapeMedia.h"
 #include "ComboMedia.h"
+#include "TextMedia.h"
 
 class DescriptionVisitor : public MediaVisitor
 {
@@ -14,6 +15,8 @@ public:
 
     void visitShapeMedia(ShapeMedia* shapeMedia);
     void visitComboMedia(ComboMedia* comboMedia);
+    void visitTextMedia(TextMedia* textMedia);
+
 private:
     string _description;
 };
