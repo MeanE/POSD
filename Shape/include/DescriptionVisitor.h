@@ -13,7 +13,7 @@ public:
     string getDescription() const;
 
     void visitShapeMedia(ShapeMedia* shapeMedia);
-    void visitComboMedia(ComboMedia* comboMedia){};
+    void visitComboMedia(ComboMedia* comboMedia);
 private:
     string _description;
 };

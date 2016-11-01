@@ -7,3 +7,5 @@ double ShapeMedia::area() const{return _shape->area();}
 double ShapeMedia::perimeter() const{return _shape->perimeter();}
 
 void ShapeMedia::accept(MediaVisitor* mediaVisitor){mediaVisitor->visitShapeMedia(this);}
+
+string ShapeMedia::description() const{return _shape->description();}

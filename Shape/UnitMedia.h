@@ -86,7 +86,7 @@ TEST (PerimeterVisitor, ComboMedia) {
     DOUBLES_EQUAL(25.8564064605, pv.getPerimeter(), EPSLION_IN_UNITMEDIA);
 }
 
-TEST (DescriptionVisitor, ShapeMedia) {
+TEST (visitShapeMedia, DescriptionVisitor) {
     Rectangle rect(0,0, 4,8);
     ShapeMedia r1(&rect);
     Circle cir(-2,1, 2);
@@ -104,5 +104,27 @@ TEST (DescriptionVisitor, ShapeMedia) {
     string descriptions = dv1.getDescription() + dv2.getDescription() + dv3.getDescription();
 
     CHECK("r(0 0 4 8) c(-2 1 2) t(1 -1 4 -1 4 3) " == descriptions);
+}
+
+TEST (visitComboMedia, DescriptionVisitor) {
+    Rectangle rect(0,0, 4,8);
+    ShapeMedia r1(&rect);
+    Circle cir(-2,1, 2);
+    ShapeMedia c1(&cir);
+    Triangle tri(1,-1, 4,-1, 4,3);
+    ShapeMedia t1(&tri);
+
+    ComboMedia cm1;
+    cm1.add(&r1);
+    ComboMedia cm2;
+    cm2.add(&c1);
+    cm2.add(&t1);
+
+    cm1.add(&cm2);
+
+    DescriptionVisitor dv;
+    cm1.accept(&dv);
+//    cout<<dv.getDescription()<<endl;
+    CHECK("combo(r(0 0 4 8) combo(c(-2 1 2) t(1 -1 4 -1 4 3) ))" == dv.getDescription());
 }
 #endif // UNITMEDIA_H_INCLUDED

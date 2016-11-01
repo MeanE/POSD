@@ -1,4 +1,5 @@
 #include "ComboMedia.h"
+#include <sstream>
 
 vector<Media*> ComboMedia::getMediaPieces() const{return _mediaPieces;}
 
@@ -10,5 +11,14 @@ void ComboMedia::accept(MediaVisitor* mediaVisitor){
     mediaVisitor->visitComboMedia(this);
 }
 
+string ComboMedia::description() const{
+    stringstream ss;
+    ss<< "combo(";
 
+    for(Media *m: _mediaPieces)
+        ss<< m->description();
+
+    ss<< ")";
+    return ss.str();
+}
 
