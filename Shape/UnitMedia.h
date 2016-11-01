@@ -5,7 +5,9 @@
 #include "Shapes.h"
 #include "Medias.h"
 #include "Visitors.h"
+#include "Builders.h"
 #include <iostream>
+#include <stack>
 using namespace std;
 
 const double EPSLION_IN_UNITMEDIA=0.000001;
@@ -126,5 +128,90 @@ TEST (visitComboMedia, DescriptionVisitor) {
     cm1.accept(&dv);
 //    cout<<dv.getDescription()<<endl;
     CHECK("combo(r(0 0 4 8) combo(c(-2 1 2) t(1 -1 4 -1 4 3) ))" == dv.getDescription());
+}
+
+TEST (buildShapeMedia, ShapeMediaBuilder) {
+    ShapeMediaBuilder smb;
+    Circle cir(0,0 ,5);
+    smb.buildShapeMedia(&cir);
+
+    Media* sm = smb.getMedia();
+    DescriptionVisitor dv;
+    sm->accept(&dv);
+
+    CHECK("c(0 0 5) " == dv.getDescription());
+}
+
+TEST (buildComboMedia, ShapeMediaBuilder) {
+    try{
+        ShapeMediaBuilder smb;
+        smb.buildComboMedia();
+
+        FAIL("Should not be here!!!");
+    }catch(string exc){
+        CHECK("ShapeMediaBuilder CAN'T Build ComboMedia!!!" == exc);
+    }
+}
+
+TEST (buildComboMedia, ComboMediaBuilder) {
+    ComboMediaBuilder cmb;
+    cmb.buildComboMedia();
+    Circle cir(0,0 ,5);
+    cmb.buildShapeMedia(&cir);
+
+    Media* cmbMedia=cmb.getMedia();
+    DescriptionVisitor dv;
+    cmbMedia->accept(&dv);
+
+    CHECK("combo(c(0 0 5) )" == dv.getDescription());
+}
+
+TEST (buildShapeMedia, ComboMediaBuilder) {
+    try{
+        ComboMediaBuilder cmb;
+        Circle cir(0,0 ,5);
+        cmb.buildShapeMedia(&cir);
+
+        FAIL("Should not be here!!!");
+    }catch(string exc){
+        CHECK("Should Call buildComboMedia() first!!!" == exc);
+    }
+}
+
+TEST (buildComboMedia2, ComboMediaBuilder) {
+    /**combo(combo(combo(r(10 0 15 5) c(12 5 2) )r(0 0 25 20) )t(0 20 16 32 25 20) )*/
+    stack<MediaBuilder*> sMb;
+    sMb.push(new ComboMediaBuilder());
+    sMb.top()->buildComboMedia();
+    sMb.push(new ComboMediaBuilder());
+    sMb.top()->buildComboMedia();
+    sMb.push(new ComboMediaBuilder());
+    sMb.top()->buildComboMedia();
+
+    Rectangle rect1(10,0, 15,5);
+    sMb.top()->buildShapeMedia(&rect1);
+    Circle cir(12,5 ,2);
+    sMb.top()->buildShapeMedia(&cir);
+    ComboMedia* cm=(ComboMedia*) sMb.top()->getMedia();
+    sMb.pop();
+    ((ComboMediaBuilder*)sMb.top())->addMedia(cm);
+
+    Rectangle rect2(0,0, 25,20);
+    sMb.top()->buildShapeMedia(&rect2);
+    cm=(ComboMedia*) sMb.top()->getMedia();
+    sMb.pop();
+    ((ComboMediaBuilder*)sMb.top())->addMedia(cm);
+
+    Triangle tri(0,20, 16,32, 25,20);
+    sMb.top()->buildShapeMedia(&tri);
+
+    DescriptionVisitor dv;
+    sMb.top()->getMedia()->accept(&dv);
+    //cout<<dv.getDescription()<<endl;
+    CHECK("combo(combo(combo(r(10 0 15 5) c(12 5 2) )r(0 0 25 20) )t(0 20 16 32 25 20) )" == dv.getDescription());
+}
+
+TEST (getText, TextMedia) {
+
 }
 #endif // UNITMEDIA_H_INCLUDED
