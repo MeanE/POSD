@@ -220,4 +220,42 @@ TEST (getText, TextMedia) {
 
     CHECK("text(r(0 0 4 3) content(HW4-3)) " == dv.getDescription());
 }
+
+TEST (removeMedia, ComboMedia) {
+    /**combo(combo(combo(r(10 0 15 5) c(12 5 2) )r(0 0 25 20) )t(0 20 16 32 25 20) )*/
+    stack<MediaBuilder*> sMb;
+    sMb.push(new ComboMediaBuilder());
+    sMb.top()->buildComboMedia();
+    sMb.push(new ComboMediaBuilder());
+    sMb.top()->buildComboMedia();
+    sMb.push(new ComboMediaBuilder());
+    sMb.top()->buildComboMedia();
+
+    Rectangle rect1(10,0, 15,5);
+    sMb.top()->buildShapeMedia(&rect1);
+    Circle cir(12,5 ,2);
+    sMb.top()->buildShapeMedia(&cir);
+    ComboMedia* cm=(ComboMedia*) sMb.top()->getMedia();
+    sMb.pop();
+    ((ComboMediaBuilder*)sMb.top())->addMedia(cm);
+
+    Rectangle rect2(0,0, 25,20);
+    sMb.top()->buildShapeMedia(&rect2);
+    cm=(ComboMedia*) sMb.top()->getMedia();
+    sMb.pop();
+    ((ComboMediaBuilder*)sMb.top())->addMedia(cm);
+
+    Triangle tri(0,20, 16,32, 25,20);
+    sMb.top()->buildShapeMedia(&tri);
+
+    ShapeMediaBuilder smb;
+    smb.buildShapeMedia(&rect2);
+    ShapeMedia* m = (ShapeMedia*)smb.getMedia();
+    ((ComboMedia*)sMb.top()->getMedia())->removeMedia(m);
+
+    DescriptionVisitor dv;
+    sMb.top()->getMedia()->accept(&dv);
+    //cout<<dv.getDescription()<<endl;
+    CHECK("combo(combo(combo(r(10 0 15 5) c(12 5 2) ))t(0 20 16 32 25 20) )" == dv.getDescription());
+}
 #endif // UNITMEDIA_H_INCLUDED

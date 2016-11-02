@@ -1,5 +1,7 @@
 #include "ComboMedia.h"
 #include <sstream>
+#include <stack>
+#include <iostream>
 
 vector<Media*> ComboMedia::getMediaPieces() const{return _mediaPieces;}
 
@@ -21,4 +23,24 @@ string ComboMedia::description() const{
     ss<< ")";
     return ss.str();
 }
+
+void ComboMedia::removeMedia(Media* m){
+    for(Media *mp: _mediaPieces){
+        /**dynamic_cast<Type*>
+          *same as instanceof in JAVA
+          *if not the same class
+          *then return a NULL class*/
+        if(ComboMedia* cm=dynamic_cast<ComboMedia*>(mp))
+            cm->removeMedia(m);
+        else{
+            string target = m->description();
+            for(size_t i=0; i<_mediaPieces.size(); i++){
+                string compare = _mediaPieces[i]->description();
+                if(compare==target)
+                    _mediaPieces.erase(_mediaPieces.begin()+i);
+            }
+        }
+    }
+}
+
 

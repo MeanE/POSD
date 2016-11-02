@@ -10,8 +10,8 @@ public:
     string getContent() const;
     Rectangle* getBoundingBox() const;
 private:
-    string _content;
     Rectangle* _boundingBox;
+    string _content;
 };
 
 #endif // TEXT_H

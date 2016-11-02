@@ -16,6 +16,7 @@ public:
     void add(Media* mediaPieces);
     void accept(MediaVisitor* mediaVisitor);
     string description() const;
+    void removeMedia(Media* m);
 
 private:
     vector<Media*> _mediaPieces;
