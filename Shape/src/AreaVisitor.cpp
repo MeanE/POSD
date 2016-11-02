@@ -11,3 +11,7 @@ void AreaVisitor::visitShapeMedia(ShapeMedia* shapeMedia){
 void AreaVisitor::visitComboMedia(ComboMedia* comboMedia){
     _area += 0.;
 }
+
+void AreaVisitor::visitTextMedia(TextMedia* textMedia){
+    _area += textMedia->getText()->getBoundingBox()->area();
+}

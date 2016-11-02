@@ -1,5 +1,6 @@
 #include "Triangle.h"
 #include <cmath>
+#include <sstream>
 using namespace std;
 
 Triangle::Triangle(double x1, double y1, double x2, double y2, double x3, double y3, string name):
@@ -38,5 +39,11 @@ void Triangle::isTriangle(){
 
         _isTriangleChecked=true;
     }
+}
+
+string Triangle::description() const {
+    stringstream ss;
+    ss << "t(" << _ax << " " << _ay << " " << _bx << " " << _by << " " << _cx << " " << _cy  << ") ";
+    return ss.str();
 }
 

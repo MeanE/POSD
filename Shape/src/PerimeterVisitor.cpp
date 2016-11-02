@@ -11,3 +11,7 @@ void PerimeterVisitor::visitShapeMedia(ShapeMedia* shapeMedia){
 void PerimeterVisitor::visitComboMedia(ComboMedia* comboMedia){
     _perimeter += 0.;
 }
+
+void PerimeterVisitor::visitTextMedia(TextMedia* textMedia){
+    _perimeter += textMedia->getText()->getBoundingBox()->perimeter();
+}

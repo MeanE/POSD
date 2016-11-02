@@ -3,5 +3,6 @@
 
 #include "AreaVisitor.h"
 #include "PerimeterVisitor.h"
+#include "DescriptionVisitor.h"
 
 #endif // VISITORS_H_INCLUDED

@@ -40,6 +40,7 @@ TEST (Triangle_first, Triangle) {
     DOUBLES_EQUAL(12, tri.perimeter(), EPSLION_IN_UNITSHAPES);
     //FAIL("123456");
 }
+
 TEST (Triangle_isTriangle, Triangle) {
     Triangle tri(1,-1, 4,-1, 4,3); //trueTriangle
     Triangle tri2(1,-1, 1,-1, 1,3); //falseTriangle

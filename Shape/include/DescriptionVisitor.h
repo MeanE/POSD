@@ -1,23 +1,24 @@
-#ifndef PERIMETERVISITOR_H
-#define PERIMETERVISITOR_H
+#ifndef DESCRIPTIONVISITOR_H
+#define DESCRIPTIONVISITOR_H
 
+#include <string>
 #include "MediaVisitor.h"
 #include "ShapeMedia.h"
 #include "ComboMedia.h"
 #include "TextMedia.h"
 
-class PerimeterVisitor : public MediaVisitor
+class DescriptionVisitor : public MediaVisitor
 {
 public:
-    PerimeterVisitor();
-    double getPerimeter() const;
+    DescriptionVisitor();
+    string getDescription() const;
 
     void visitShapeMedia(ShapeMedia* shapeMedia);
     void visitComboMedia(ComboMedia* comboMedia);
     void visitTextMedia(TextMedia* textMedia);
 
 private:
-    double _perimeter;
+    string _description;
 };
 
-#endif // PERIMETERVISITOR_H
+#endif // DESCRIPTIONVISITOR_H

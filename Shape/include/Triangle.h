@@ -12,6 +12,7 @@ public:
 
     double area() const;
     double perimeter() const;
+    string description() const;
     void isTriangle();
 
 private:
