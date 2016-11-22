@@ -62,16 +62,25 @@
 		<Unit filename="include/DescriptionVisitor.h">
 			<Option compile="1" />
 		</Unit>
+		<Unit filename="include/Document.h">
+			<Option compile="1" />
+		</Unit>
 		<Unit filename="include/Media.h">
 			<Option compile="1" />
 		</Unit>
 		<Unit filename="include/MediaBuilder.h">
 			<Option compile="1" />
 		</Unit>
+		<Unit filename="include/MediaDirector.h">
+			<Option compile="1" />
+		</Unit>
 		<Unit filename="include/MediaVisitor.h">
 			<Option compile="1" />
 		</Unit>
 		<Unit filename="include/Medias.h" />
+		<Unit filename="include/MyDocument.h">
+			<Option compile="1" />
+		</Unit>
 		<Unit filename="include/PerimeterVisitor.h">
 			<Option compile="1" />
 		</Unit>
@@ -91,21 +100,27 @@
 		<Unit filename="include/Text.h">
 			<Option compile="1" />
 		</Unit>
-		<Unit filename="include/TextMedia.h" />
+		<Unit filename="include/TextMedia.h">
+			<Option compile="1" />
+		</Unit>
 		<Unit filename="include/Triangle.h">
 			<Option compile="1" />
 		</Unit>
 		<Unit filename="include/Visitors.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="myShape.txt" />
 		<Unit filename="src/AreaVisitor.cpp" />
 		<Unit filename="src/Circle.cpp" />
 		<Unit filename="src/ComboMedia.cpp" />
 		<Unit filename="src/ComboMediaBuilder.cpp" />
 		<Unit filename="src/Compute.cpp" />
 		<Unit filename="src/DescriptionVisitor.cpp" />
+		<Unit filename="src/Document.cpp" />
 		<Unit filename="src/Media.cpp" />
 		<Unit filename="src/MediaBuilder.cpp" />
+		<Unit filename="src/MediaDirector.cpp" />
 		<Unit filename="src/MediaVisitor.cpp" />
+		<Unit filename="src/MyDocument.cpp" />
 		<Unit filename="src/PerimeterVisitor.cpp" />
 		<Unit filename="src/Rectangle.cpp" />
 		<Unit filename="src/Shape.cpp" />

@@ -6,8 +6,9 @@
 #include "Medias.h"
 #include "Visitors.h"
 #include "Builders.h"
+#include "MyDocument.h"
+#include "MediaDirector.h"
 #include <iostream>
-#include <stack>
 using namespace std;
 
 const double EPSLION_IN_UNITMEDIA=0.000001;
@@ -166,7 +167,7 @@ TEST (buildComboMedia, ComboMediaBuilder) {
     CHECK("combo(c(0 0 5) )" == dv.getDescription());
 }
 
-TEST (buildShapeMedia, ComboMediaBuilder) {
+TEST (buildShapeMedia_FirstCall, ComboMediaBuilder) {
     try{
         ComboMediaBuilder cmb;
         Circle cir(0,0 ,5);
@@ -257,5 +258,41 @@ TEST (removeMedia, ComboMedia) {
     sMb.top()->getMedia()->accept(&dv);
     //cout<<dv.getDescription()<<endl;
     CHECK("combo(combo(combo(r(10 0 15 5) c(12 5 2) ))t(0 20 16 32 25 20) )" == dv.getDescription());
+}
+
+TEST (openDocument_Failed,MyDocument){
+    try{
+        MyDocument md;
+        md.openDocument("noExsist.txt");
+        cout<<"Should Not Be Here!!!"<<endl;
+    }catch(string exc){
+        CHECK("file is not existed." == exc);
+    }
+}
+
+TEST (openDocument_Succeedly,MyDocument){
+    MyDocument md;
+    string fileName="myShape.txt";
+
+    CHECK("combo(r(0 0 3 2) c(0 0 5) combo(r(0 0 5 4) c(0 0 10) )combo(r(0 1 8 7) c(0 1 10) ))"
+          == md.openDocument(fileName));
+}
+
+TEST (buildMediaTree,MediaBuilder){
+    MyDocument mdoc;
+    string fileName="myShape.txt";
+    string content=mdoc.openDocument(fileName);
+
+    stack<MediaBuilder*> sMb;
+    MediaDirector md;
+    md.setMediaBuilder(&sMb);
+
+    md.concrete(content);
+
+    DescriptionVisitor dv;
+    sMb.top()->getMedia()->accept(&dv);
+    //cout<<dv.getDescription()<<endl;
+    CHECK("combo(r(0 0 3 2) c(0 0 5) combo(r(0 0 5 4) c(0 0 10) )combo(r(0 1 8 7) c(0 1 10) ))"
+          == dv.getDescription());
 }
 #endif // UNITMEDIA_H_INCLUDED
