@@ -278,21 +278,21 @@ TEST (openDocument_Succeedly,MyDocument){
           == md.openDocument(fileName));
 }
 
-//TEST (MediaDirector,MediaBuilder){
-//    MyDocument mdoc;
-//    string fileName="myShape.txt";
-//    string content=mdoc.openDocument(fileName);
-//
-//    stack<MediaBuilder*> sMb;
-//    MediaDirector md;
-//    md.setMediaBuilder(&sMb);
-//
-//    md.concrete(content);
-//
-//    DescriptionVisitor dv;
-//    sMb.top()->getMedia()->accept(&dv);
-//
-//    CHECK("combo(r(0 0 3 2) c(0 0 5) combo(r(0 0 5 4) c(0 0 10) )combo(r(0 1 8 7) c(0 1 10) ))"
-//          == dv.getDescription());
-//}
+TEST (buildMediaTree,MediaBuilder){
+    MyDocument mdoc;
+    string fileName="myShape.txt";
+    string content=mdoc.openDocument(fileName);
+
+    stack<MediaBuilder*> sMb;
+    MediaDirector md;
+    md.setMediaBuilder(&sMb);
+
+    md.concrete(content);
+
+    DescriptionVisitor dv;
+    sMb.top()->getMedia()->accept(&dv);
+    //cout<<dv.getDescription()<<endl;
+    CHECK("combo(r(0 0 3 2) c(0 0 5) combo(r(0 0 5 4) c(0 0 10) )combo(r(0 1 8 7) c(0 1 10) ))"
+          == dv.getDescription());
+}
 #endif // UNITMEDIA_H_INCLUDED
