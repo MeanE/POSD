@@ -278,7 +278,7 @@ TEST (openDocument_Succeedly,MyDocument){
           == md.openDocument(fileName));
 }
 
-TEST (buildMediaTree,MediaBuilder){
+TEST (buildMediaTreeUseDirector,MediaDirector){
     MyDocument mdoc;
     string fileName="myShape.txt";
     string content=mdoc.openDocument(fileName);
