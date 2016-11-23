@@ -264,7 +264,7 @@ TEST (openDocument_Failed,MyDocument){
     try{
         MyDocument md;
         md.openDocument("noExsist.txt");
-        cout<<"Should Not Be Here!!!"<<endl;
+        FAIL("Should Not Be Here!!!");
     }catch(string exc){
         CHECK("file is not existed." == exc);
     }
