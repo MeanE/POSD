@@ -21,7 +21,8 @@ void MediaDirector::concrete(string content){
     char* ptr=strtok(src, "()");
     while(ptr!=NULL) {
         string piece=string(ptr);
-        piece.erase(0,piece.find_first_not_of(" ")); //trim head space
+        piece.erase(0,piece.find_first_not_of(" ")); /**trim head space*/
+        piece.erase(piece.find_last_not_of(" ") + 1);/**trim last space*/
         tokens.push_back(string(piece));
         ptr=strtok(NULL, "()");
     }
