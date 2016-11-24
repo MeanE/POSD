@@ -1,4 +1,7 @@
 #include "MyDocument.h"
+//#include <iostream>
+//#include <sys/stat.h>
+
 MyDocument::~MyDocument(){_myFile.close();}
 
 void MyDocument::openFile(const string name){
@@ -7,8 +10,8 @@ void MyDocument::openFile(const string name){
 }
 
 bool MyDocument::canOpenDocument(const string name){
-    ifstream myFile(name.c_str());
-    return myFile.good();
+    ifstream myFile(name);
+    return myFile;
 }
 
 string MyDocument::readFile(){
