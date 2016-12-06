@@ -103,6 +103,7 @@
 		<Unit filename="include/TextMedia.h">
 			<Option compile="1" />
 		</Unit>
+		<Unit filename="include/TextUI.h" />
 		<Unit filename="include/Triangle.h">
 			<Option compile="1" />
 		</Unit>
@@ -128,6 +129,7 @@
 		<Unit filename="src/ShapeMediaBuilder.cpp" />
 		<Unit filename="src/Text.cpp" />
 		<Unit filename="src/TextMedia.cpp" />
+		<Unit filename="src/TextUI.cpp" />
 		<Unit filename="src/Triangle.cpp" />
 		<Extensions>
 			<code_completion />
