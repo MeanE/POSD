@@ -49,6 +49,10 @@ void TextUI::analysisInstructions(string userInput){
         instructionDelete(content);
         return;
     }
+    if(instruction == "add" && content.length()){
+        instructionAdd(content);
+        return;
+    }
 }
 
 vector<string> getTokens(string content, string spliter){
@@ -209,18 +213,58 @@ void TextUI::instructionDelete(string content){
     }
     else if(tokens.size()==3){
         if(tokens[1]=="from"){
-            auto shapeMediaIt=_medias.find(tokens[0]);
+            auto firstMediaIt=_medias.find(tokens[0]);
             auto comboMediaIt=_medias.find(tokens[2]);
 
-            if(shapeMediaIt == _medias.end())
+            if(firstMediaIt == _medias.end()){
                 cout<<tokens[0]<<" does not exist.\n";
-            else if(comboMediaIt == _medias.end())
+                return;
+            }
+            else if(comboMediaIt == _medias.end()){
                 cout<<tokens[2]<<" does not exist.\n";
-            else
-                ((ComboMedia*)comboMediaIt->second)->removeMedia(shapeMediaIt->second);
-
+                return;
+            }
+            else{
+                if(ComboMedia* c=dynamic_cast<ComboMedia*>(comboMediaIt->second))
+                    ((ComboMedia*)comboMediaIt->second)->removeMedia(firstMediaIt->second);
+                else{
+                    cout<<"Should input a ComboMedia after \"from\".\n";
+                    return;
+                }
+            }
         }
-        return;
     }
 }
 
+void TextUI::instructionAdd(string content){
+    vector<string> tokens=getTokens(content, "=,() {}");
+    if(tokens.size()<1) return;
+
+    if(tokens.size()==3){
+        if(tokens[1]=="to"){
+            auto firstMediaIt=_medias.find(tokens[0]);
+            auto comboMediaIt=_medias.find(tokens[2]);
+
+            if(firstMediaIt == _medias.end()){
+                cout<<tokens[0]<<" does not exist.\n";
+                return;
+            }
+            else if(comboMediaIt == _medias.end()){
+                cout<<tokens[2]<<" does not exist.\n";
+                return;
+            }
+            else if(tokens[0]==tokens[2]){
+                cout<<"Can not add itself.\n";
+                return;
+            }
+            else{
+                if(ComboMedia* c=dynamic_cast<ComboMedia*>(comboMediaIt->second))
+                    ((ComboMedia*)comboMediaIt->second)->add(firstMediaIt->second);
+                else{
+                    cout<<"Should input a ComboMedia after \"to\".\n";
+                    return;
+                }
+            }
+        }
+    }
+}

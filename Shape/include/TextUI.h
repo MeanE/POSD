@@ -17,6 +17,7 @@ private:
     void instructionDefine(string content);
     void instructionShow() const;
     void instructionDelete(string content);
+    void instructionAdd(string content);
 
     map<string, Media*> _medias;
 };
