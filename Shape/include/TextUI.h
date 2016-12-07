@@ -1,9 +1,7 @@
 #ifndef TEXTUI_H
 #define TEXTUI_H
 
-#include "Shapes.h"
 #include "Medias.h"
-#include "Visitors.h"
 #include <map>
 using namespace std;
 

@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <cstdlib>
 #include <algorithm>
+#include "Visitors.h"
+#include "Shapes.h"
 
 string help(){
     ostringstream sout;
