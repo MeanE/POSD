@@ -196,7 +196,14 @@ void TextUI::instructionDelete(string content){
     if(tokens.size()==1){
         if(_medias.find(tokens[0]) == _medias.end())
             cout<<tokens[0]<<" does not exist.\n";
-        else _medias.erase(_medias.find(tokens[0]));
+        else{
+            auto targetIt =_medias.find(tokens[0]);
+            for(auto it: _medias){
+                if(ComboMedia* cm=dynamic_cast<ComboMedia*>(it.second))
+                    cm->removeMedia(targetIt->second);
+            }
+            _medias.erase(targetIt);
+        }
 
         return;
     }
@@ -209,13 +216,11 @@ void TextUI::instructionDelete(string content){
                 cout<<tokens[0]<<" does not exist.\n";
             else if(comboMediaIt == _medias.end())
                 cout<<tokens[2]<<" does not exist.\n";
-            else{
+            else
                 ((ComboMedia*)comboMediaIt->second)->removeMedia(shapeMediaIt->second);
-            }
-        }
 
+        }
         return;
     }
-
 }
 
