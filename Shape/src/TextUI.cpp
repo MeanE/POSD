@@ -40,35 +40,43 @@ void TextUI::analysisInstructions(string userInput){
     if(firstSpace == string::npos) return;
     string instruction = userInput.substr(0, firstSpace);
     string content = userInput.substr(firstSpace, userInput.length()-1);
-    if(instruction == "def"){
+
+    if(instruction == "def" && content.length()){
         instructionDefine(content);
+        return;
+    }
+    if(instruction == "delete" && content.length()){
+        instructionDelete(content);
         return;
     }
 }
 
-bool isDigits(const string &str)
-{
-    return all_of(str.begin(), str.end(), ::isdigit);
-}
-void TextUI::instructionDefine(string content){
-    //cout<<content<<endl;
-    if(!content.size()) return;
+vector<string> getTokens(string content, string spliter){
     vector<string> tokens;
 
     char* src=new char[content.length()+1];
     strcpy(src, content.c_str());
 
-    char* ptr=strtok(src, "=,() {}");
+    char* ptr=strtok(src, spliter.c_str());
     while(ptr!=NULL) {
         string piece=string(ptr);
         piece.erase(0,piece.find_first_not_of(" ")); /**trim head space*/
         piece.erase(piece.find_last_not_of(" ") + 1);/**trim last space*/
         tokens.push_back(string(piece));
-        ptr=strtok(NULL, "=,() {}");
+        ptr=strtok(NULL, spliter.c_str());
     }
-    //cout<<tokens.size()<<endl; for(string token: tokens) cout<<token<<endl;
-    if(tokens.size()<2 && tokens[1]!="combo") return;
 
+    return tokens;
+}
+bool isDigits(const string &str){
+    return all_of(str.begin(), str.end(), ::isdigit);
+}
+void TextUI::instructionDefine(string content){
+    //cout<<content<<endl;
+    vector<string> tokens=getTokens(content, "=,() {}");
+
+    //cout<<tokens.size()<<endl; for(string token: tokens) cout<<token<<endl;
+    if(tokens.size()<2) return;
 
     /**build Media*/
     if(tokens[1]!="combo" && tokens.size()>3){
@@ -84,7 +92,7 @@ void TextUI::instructionDefine(string content){
                 double param1=atof(tokens[2].c_str());
                 double param2=atof(tokens[3].c_str());
                 double param3=atof(tokens[4].c_str());
-                Circle* cir=new Circle(param1,param2,param3);
+                Circle* cir=new Circle(param1,param2,param3,tokens[0]);
                 smb.buildShapeMedia(cir);
             }
             else{
@@ -99,7 +107,7 @@ void TextUI::instructionDefine(string content){
                 double param2=atof(tokens[3].c_str());
                 double param3=atof(tokens[4].c_str());
                 double param4=atof(tokens[5].c_str());
-                Rectangle* rect=new Rectangle(param1,param2,param3,param4);
+                Rectangle* rect=new Rectangle(param1,param2,param3,param4,tokens[0]);
                 smb.buildShapeMedia(rect);
             }
             else{
@@ -116,7 +124,7 @@ void TextUI::instructionDefine(string content){
                 double param4=atof(tokens[5].c_str());
                 double param5=atof(tokens[6].c_str());
                 double param6=atof(tokens[7].c_str());
-                Triangle* tri=new Triangle(param1,param2,param3,param4,param5,param6);
+                Triangle* tri=new Triangle(param1,param2,param3,param4,param5,param6,tokens[0]);
                 smb.buildShapeMedia(tri);
             }
             else{
@@ -126,14 +134,14 @@ void TextUI::instructionDefine(string content){
         }
 
         /**find key*/
-        if(medias.find(tokens[0]) == medias.end()){
+        if(_medias.find(tokens[0]) == _medias.end()){
             printf(">> %s (", tokens[1].c_str());
             for(int i=2; i<tokens.size(); i++){
                 if(i==2) cout<<tokens[i];
                 else cout<<","<<tokens[i];
             }
             cout<<")\n";
-            medias[tokens[0]] = smb.getMedia();
+            _medias[tokens[0]] = smb.getMedia();
         }
         else printf("%s already exists.\n", tokens[0].c_str());
     }
@@ -144,12 +152,12 @@ void TextUI::instructionDefine(string content){
         /**at least 2 shapes to compose*/
         if(tokens.size()-2 >= 2){
             for(int i=2; i<tokens.size(); i++){
-                if(medias.find(tokens[i]) == medias.end()){
+                if(_medias.find(tokens[i]) == _medias.end()){
                     cout<<tokens[i]<<" not found.\n";
                     return;
                 }
                 else{
-                    Media* m = medias.find(tokens[i])->second;
+                    Media* m = _medias.find(tokens[i])->second;
                     cmb.addMedia(m);
                 }
             }
@@ -160,22 +168,54 @@ void TextUI::instructionDefine(string content){
         }
 
         /**find key*/
-        if(medias.find(tokens[0]) == medias.end())
-            medias[tokens[0]] = cmb.getMedia();
+        if(_medias.find(tokens[0]) == _medias.end())
+            _medias[tokens[0]] = cmb.getMedia();
         else printf("%s already exists.\n", tokens[0].c_str());
     }
 }
 
 void TextUI::instructionShow() const{
-    if(medias.empty()) cout<<"There is nothing yet.\n";
+    if(_medias.empty()) cout<<"There is nothing yet.\n";
     else{
-        for(auto it: medias)
+        for(auto it: _medias)
             cout<<"   "<<it.first<<endl;
-//        for(auto it: medias){
-//            Media* m = it.second;
-//            DescriptionVisitor dv;
-//            m->accept(&dv);
-//            cout<<dv.getDescription()<<endl;
-//        }
+        /**media test*/
+        for(auto it: _medias){
+            Media* m = it.second;
+            DescriptionVisitor dv;
+            m->accept(&dv);
+            cout<<dv.getDescription()<<endl;
+        }
     }
 }
+
+void TextUI::instructionDelete(string content){
+    vector<string> tokens=getTokens(content, "=,() {}");
+    if(tokens.size()<1) return;
+
+    if(tokens.size()==1){
+        if(_medias.find(tokens[0]) == _medias.end())
+            cout<<tokens[0]<<" does not exist.\n";
+        else _medias.erase(_medias.find(tokens[0]));
+
+        return;
+    }
+    else if(tokens.size()==3){
+        if(tokens[1]=="from"){
+            auto shapeMediaIt=_medias.find(tokens[0]);
+            auto comboMediaIt=_medias.find(tokens[2]);
+
+            if(shapeMediaIt == _medias.end())
+                cout<<tokens[0]<<" does not exist.\n";
+            else if(comboMediaIt == _medias.end())
+                cout<<tokens[2]<<" does not exist.\n";
+            else{
+                ((ComboMedia*)comboMediaIt->second)->removeMedia(shapeMediaIt->second);
+            }
+        }
+
+        return;
+    }
+
+}
+

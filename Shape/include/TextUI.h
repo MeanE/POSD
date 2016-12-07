@@ -16,7 +16,9 @@ private:
     void analysisInstructions(string userInput);
     void instructionDefine(string content);
     void instructionShow() const;
-    map<string, Media*> medias;
+    void instructionDelete(string content);
+
+    map<string, Media*> _medias;
 };
 
 #endif // TEXTUI_H
