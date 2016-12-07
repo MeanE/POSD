@@ -36,6 +36,20 @@ void TextUI::analysisInstructions(string userInput){
         return;
     }
 
+    /**name.action(e.g. area/perimeter)*/
+    int firstDot = userInput.find_first_of('.');
+    if(firstDot != string::npos){
+        string name = userInput.substr(0, firstDot);
+        string action = userInput.substr(firstDot+1, userInput.length()-1);
+        if(_medias.find(name)!=_medias.end()){
+            instructionNameDotAction(name, action);
+        }
+        else{
+            cout<<name<<" does not exist.\n";
+            return;
+        }
+    }
+
     int firstSpace = userInput.find_first_of(' ');
     if(firstSpace == string::npos) return;
     string instruction = userInput.substr(0, firstSpace);
@@ -73,7 +87,8 @@ vector<string> getTokens(string content, string spliter){
     return tokens;
 }
 bool isDigits(const string &str){
-    return all_of(str.begin(), str.end(), ::isdigit);
+    return str.find_first_not_of("-0123456789") == std::string::npos;
+    //return all_of(str.begin(), str.end(), ::isdigit);
 }
 void TextUI::instructionDefine(string content){
     //cout<<content<<endl;
@@ -87,7 +102,7 @@ void TextUI::instructionDefine(string content){
         /**check parameter is digit*/
         for(int i=2; i<tokens.size(); i++)
             if(!isDigits(tokens[i])) return;
-
+        //cout<<"xxx"<<endl;
         /**build ShapeMedia*/
         ShapeMediaBuilder smb;
         if(tokens[1]=="Circle"){
@@ -183,13 +198,8 @@ void TextUI::instructionShow() const{
     else{
         for(auto it: _medias)
             cout<<"   "<<it.first<<endl;
-        /**media test*/
-        for(auto it: _medias){
-            Media* m = it.second;
-            DescriptionVisitor dv;
-            m->accept(&dv);
-            cout<<dv.getDescription()<<endl;
-        }
+        /**media description output*/
+        for(auto it: _medias){Media* m = it.second;DescriptionVisitor dv;m->accept(&dv);cout<<dv.getDescription()<<endl;}
     }
 }
 
@@ -237,6 +247,7 @@ void TextUI::instructionDelete(string content){
 }
 
 void TextUI::instructionAdd(string content){
+
     vector<string> tokens=getTokens(content, "=,() {}");
     if(tokens.size()<1) return;
 
@@ -268,3 +279,22 @@ void TextUI::instructionAdd(string content){
         }
     }
 }
+
+void TextUI::instructionNameDotAction(string name, string action){
+    //cout<<name<<" "<<action<<endl;
+    if(action == "area"){
+        AreaVisitor av;
+        _medias[name]->accept(&av);
+        printf(">> %f\n", av.getArea());
+    }
+    else if(action == "perimeter"){
+        PerimeterVisitor pv;
+        _medias[name]->accept(&pv);
+        printf(">> %f\n", pv.getPerimeter());
+    }
+    else{
+        printf("%s not %s's action.\n", action.c_str(), name.c_str());
+    }
+}
+
+
