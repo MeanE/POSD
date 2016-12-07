@@ -42,4 +42,15 @@ void ComboMedia::removeMedia(Media* m){
     }
 }
 
+string ComboMedia::name() const{
+    stringstream ss;
+    ss<< _name<<"{";
+
+    for(Media *m: _mediaPieces)
+        ss<< m->name();
+
+    ss<< "}";
+    return ss.str();
+}
+
 

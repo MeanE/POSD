@@ -4,5 +4,6 @@
 #include "AreaVisitor.h"
 #include "PerimeterVisitor.h"
 #include "DescriptionVisitor.h"
+#include "NameVisitor.h"
 
 #endif // VISITORS_H_INCLUDED

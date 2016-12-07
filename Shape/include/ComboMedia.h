@@ -11,15 +11,19 @@ using namespace std;
 class ComboMedia : public Media
 {
 public:
+    ComboMedia(string name="unknown"):_name(name){}
+
     vector<Media*> getMediaPieces() const;
 
     void add(Media* mediaPieces);
     void accept(MediaVisitor* mediaVisitor);
     string description() const;
     void removeMedia(Media* m);
+    string name() const;
 
 private:
     vector<Media*> _mediaPieces;
+    string _name;
 };
 
 #endif // COMBOMEDIA_H

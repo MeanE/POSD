@@ -6,6 +6,10 @@ void ComboMediaBuilder::buildComboMedia(){
     _comboMedia=new ComboMedia();
 }
 
+void ComboMediaBuilder::buildComboMedia(string name){
+    _comboMedia=new ComboMedia(name);
+}
+
 void ComboMediaBuilder::buildShapeMedia(Shape* s){
 //    throw string("ComboMediaBuilder CAN'T Build ShapeMedia!!!");
     if(!_comboMedia)

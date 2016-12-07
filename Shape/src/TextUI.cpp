@@ -169,7 +169,7 @@ void TextUI::instructionDefine(string content){
     /**build ComboMedia*/
     else if(tokens[1]=="combo"){
         ComboMediaBuilder cmb;
-        cmb.buildComboMedia();
+        cmb.buildComboMedia(tokens[0]);
         /**at least 2 shapes to compose*/
         if(tokens.size()-2 >= 2){
             for(int i=2; i<tokens.size(); i++){
@@ -271,8 +271,16 @@ void TextUI::instructionAdd(string content){
                 return;
             }
             else{
-                if(ComboMedia* c=dynamic_cast<ComboMedia*>(comboMediaIt->second))
+                if(ComboMedia* c=dynamic_cast<ComboMedia*>(comboMediaIt->second)){
                     ((ComboMedia*)comboMediaIt->second)->add(firstMediaIt->second);
+
+                    cout<<">> "<<tokens[2]<<" = ";
+                    NameVisitor nv;
+                    comboMediaIt->second->accept(&nv);
+                    DescriptionVisitor dv;
+                    comboMediaIt->second->accept(&dv);
+                    cout<<nv.getName()<<"= "<<dv.getDescription()<<endl;
+                }
                 else{
                     cout<<"Should input a ComboMedia after \"to\".\n";
                     return;
