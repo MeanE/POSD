@@ -13,6 +13,7 @@ public:
 
     void accept(MediaVisitor* mv) ;
     string description() const;
+    string name() const;
 
 private:
     Text* _text;

@@ -5,6 +5,7 @@
 #include "Shapes.h"
 #include "Compute.h"
 //#include <iostream>
+
 using namespace std;
 
 const double EPSLION_IN_UNITSHAPES=0.000001;
@@ -21,7 +22,7 @@ TEST (Circle_Name, Circle) {
     Circle cir(0,0, 10, "cirTest");
     string cirName=cir.getName(); //default value: unknown
 
-    CHECK("cirTest"==cirName);
+    CHECK("cirTest "==cirName);
     //FAIL("123456");
 }
 
@@ -86,7 +87,7 @@ TEST (Compute_maxArea, Compute) {
 
     Shape* maxAreaShape = cpt.maxArea(shp);
 
-    CHECK("cir1" == maxAreaShape->getName());
+    CHECK("cir1 " == maxAreaShape->getName());
     DOUBLES_EQUAL(314.15926, maxAreaShape->area(), EPSLION_IN_UNITSHAPES);
     CHECK(&cir == maxAreaShape);
     //FAIL("123456");
@@ -103,19 +104,19 @@ TEST (Compute_sortByDecreasingPerimeter, Compute) {
 
     cpt.sortByDecreasingPerimeter(shp);
 
-    CHECK("rect2" == shp[0]->getName());
+    CHECK("rect2 " == shp[0]->getName());
     DOUBLES_EQUAL(80, shp[0]->perimeter(), EPSLION_IN_UNITSHAPES);
     CHECK(&rect2 == shp[0]);
 
-    CHECK("cir1" == shp[1]->getName());
+    CHECK("cir1 " == shp[1]->getName());
     DOUBLES_EQUAL(62.831852, shp[1]->perimeter(), EPSLION_IN_UNITSHAPES);
     CHECK(&cir == shp[1]);
 
-    CHECK("rect1" == shp[2]->getName());
+    CHECK("rect1 " == shp[2]->getName());
     DOUBLES_EQUAL(14, shp[2]->perimeter(), EPSLION_IN_UNITSHAPES);
     CHECK(&rect == shp[2]);
 
-    CHECK("tri1" == shp[3]->getName());
+    CHECK("tri1 " == shp[3]->getName());
     DOUBLES_EQUAL(12, shp[3]->perimeter(), EPSLION_IN_UNITSHAPES);
     CHECK(&tri == shp[3]);
     //FAIL("123456");

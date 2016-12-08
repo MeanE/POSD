@@ -17,3 +17,4 @@ string TextMedia::description() const{
     return ss.str();
 }
 
+string TextMedia::name() const{return _text->getName();}

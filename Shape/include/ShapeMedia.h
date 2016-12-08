@@ -16,6 +16,7 @@ public:
     double perimeter() const;
     void accept(MediaVisitor* mediaVisitor);
     string description() const;
+    string name() const;
 
 private:
     Shape* _shape;
