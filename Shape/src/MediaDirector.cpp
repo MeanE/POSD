@@ -27,12 +27,15 @@ void MediaDirector::concrete(string content){
         ptr=strtok(NULL, "()");
     }
 
+    int comboCount=0;
+
     for(auto it=tokens.begin(); it!=tokens.end(); it++){
         auto& token=*it;
         //cout<<token<<endl;
         if(token=="combo"){
             _mb->push(new ComboMediaBuilder());
             _mb->top()->buildComboMedia();
+            comboCount++;
             continue;
         }
         if(token=="r"){
@@ -65,7 +68,7 @@ void MediaDirector::concrete(string content){
             _mb->top()->buildShapeMedia(new Triangle(x1, y1, x2, y2, x3, y3));
             continue;
         }
-        if(token.empty()){ /**ComboMedia end*/
+        if(token.empty() && comboCount>1){ /**ComboMedia end*/
             ComboMedia* cm=(ComboMedia*) _mb->top()->getMedia();
             _mb->pop();
             ((ComboMediaBuilder*)_mb->top())->addMedia(cm);
