@@ -58,7 +58,9 @@
 		<Unit filename="include/ComboMediaBuilder.h">
 			<Option compile="1" />
 		</Unit>
-		<Unit filename="include/Compute.h" />
+		<Unit filename="include/Compute.h">
+			<Option compile="1" />
+		</Unit>
 		<Unit filename="include/DescriptionVisitor.h">
 			<Option compile="1" />
 		</Unit>
