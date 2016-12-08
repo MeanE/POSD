@@ -8,13 +8,14 @@
 #include <algorithm>
 #include "Visitors.h"
 #include "Shapes.h"
+#include <fstream>
 
 string help(){
     ostringstream sout;
 	sout << "This system provide some instructions for user.\n"
         << "For example:\n"
         << "\'def\' name = Shape(x,y,z,...) or name = combo{name,name}\n"
-        << "\'name.area\' or \'name.perimeter\'\n"
+        << "\'name.area?\' or \'name.perimeter?\'\n"
         << "\'save\' name to \"File_Name.txt\" & \'load\' \"File_Name.txt\"\n"
         << "\'add\' name to name(combo) & \'show\'\n"
         << "\'delete\' name or name from name(combo)\n";
@@ -38,9 +39,10 @@ void TextUI::analysisInstructions(string userInput){
         return;
     }
 
+    size_t firstSpace = userInput.find_first_of(' ');
     /**name.action(e.g. area/perimeter)*/
-    int firstDot = userInput.find_first_of('.');
-    if(firstDot != string::npos){
+    size_t firstDot = userInput.find_first_of('.');
+    if(firstDot != string::npos && firstSpace == string::npos){
         string name = userInput.substr(0, firstDot);
         string action = userInput.substr(firstDot+1, userInput.length()-1);
         if(_medias.find(name)!=_medias.end()){
@@ -52,7 +54,6 @@ void TextUI::analysisInstructions(string userInput){
         }
     }
 
-    int firstSpace = userInput.find_first_of(' ');
     if(firstSpace == string::npos) return;
     string instruction = userInput.substr(0, firstSpace);
     string content = userInput.substr(firstSpace, userInput.length()-1);
@@ -61,12 +62,16 @@ void TextUI::analysisInstructions(string userInput){
         instructionDefine(content);
         return;
     }
-    if(instruction == "delete" && content.length()){
+    else if(instruction == "delete" && content.length()){
         instructionDelete(content);
         return;
     }
-    if(instruction == "add" && content.length()){
+    else if(instruction == "add" && content.length()){
         instructionAdd(content);
+        return;
+    }
+    else if(instruction == "save" && content.length()){
+        instructionSave(content);
         return;
     }
 }
@@ -100,9 +105,10 @@ void TextUI::instructionDefine(string content){
     if(tokens.size()<2) return;
 
     /**build Media*/
+    bool isBuild = false;
     if(tokens[1]!="combo" && tokens.size()>3){
         /**check parameter is digit*/
-        for(int i=2; i<tokens.size(); i++)
+        for(size_t i=2; i<tokens.size(); i++)
             if(!isDigits(tokens[i])) return;
         //cout<<"xxx"<<endl;
         /**build ShapeMedia*/
@@ -115,6 +121,7 @@ void TextUI::instructionDefine(string content){
                 double param3=atof(tokens[4].c_str());
                 Circle* cir=new Circle(param1,param2,param3,tokens[0]);
                 smb.buildShapeMedia(cir);
+                isBuild=true;
             }
             else{
                 cout<<"Input illegal (Circle has only 3 parameters).\n";
@@ -130,6 +137,7 @@ void TextUI::instructionDefine(string content){
                 double param4=atof(tokens[5].c_str());
                 Rectangle* rect=new Rectangle(param1,param2,param3,param4,tokens[0]);
                 smb.buildShapeMedia(rect);
+                isBuild=true;
             }
             else{
                 cout<<"Input illegal (Rectangle has only 4 parameters).\n";
@@ -147,6 +155,7 @@ void TextUI::instructionDefine(string content){
                 double param6=atof(tokens[7].c_str());
                 Triangle* tri=new Triangle(param1,param2,param3,param4,param5,param6,tokens[0]);
                 smb.buildShapeMedia(tri);
+                isBuild=true;
             }
             else{
                 cout<<"Input illegal (Triangle has only 6 parameters).\n";
@@ -155,16 +164,18 @@ void TextUI::instructionDefine(string content){
         }
 
         /**find key*/
-        if(_medias.find(tokens[0]) == _medias.end()){
-            printf(">> %s (", tokens[1].c_str());
-            for(int i=2; i<tokens.size(); i++){
-                if(i==2) cout<<tokens[i];
-                else cout<<","<<tokens[i];
+        if(isBuild){
+            if(_medias.find(tokens[0]) == _medias.end()){
+                printf(">> %s (", tokens[1].c_str());
+                for(size_t i=2; i<tokens.size(); i++){
+                    if(i==2) cout<<tokens[i];
+                    else cout<<","<<tokens[i];
+                }
+                cout<<")\n";
+                _medias[tokens[0]] = smb.getMedia();
             }
-            cout<<")\n";
-            _medias[tokens[0]] = smb.getMedia();
+            else printf("%s already exists.\n", tokens[0].c_str());
         }
-        else printf("%s already exists.\n", tokens[0].c_str());
     }
     /**build ComboMedia*/
     else if(tokens[1]=="combo"){
@@ -172,7 +183,7 @@ void TextUI::instructionDefine(string content){
         cmb.buildComboMedia(tokens[0]);
         /**at least 2 shapes to compose*/
         if(tokens.size()-2 >= 2){
-            for(int i=2; i<tokens.size(); i++){
+            for(size_t i=2; i<tokens.size(); i++){
                 if(_medias.find(tokens[i]) == _medias.end()){
                     cout<<tokens[i]<<" not found.\n";
                     return;
@@ -180,6 +191,7 @@ void TextUI::instructionDefine(string content){
                 else{
                     Media* m = _medias.find(tokens[i])->second;
                     cmb.addMedia(m);
+                    isBuild = true;
                 }
             }
         }
@@ -189,9 +201,11 @@ void TextUI::instructionDefine(string content){
         }
 
         /**find key*/
-        if(_medias.find(tokens[0]) == _medias.end())
-            _medias[tokens[0]] = cmb.getMedia();
-        else printf("%s already exists.\n", tokens[0].c_str());
+        if(isBuild){
+            if(_medias.find(tokens[0]) == _medias.end() && isBuild)
+                _medias[tokens[0]] = cmb.getMedia();
+            else printf("%s already exists.\n", tokens[0].c_str());
+        }
     }
 }
 
@@ -237,8 +251,8 @@ void TextUI::instructionDelete(string content){
                 return;
             }
             else{
-                if(ComboMedia* c=dynamic_cast<ComboMedia*>(comboMediaIt->second))
-                    ((ComboMedia*)comboMediaIt->second)->removeMedia(firstMediaIt->second);
+                if(ComboMedia* cm=dynamic_cast<ComboMedia*>(comboMediaIt->second))
+                    cm->removeMedia(firstMediaIt->second);
                 else{
                     cout<<"Should input a ComboMedia after \"from\".\n";
                     return;
@@ -249,7 +263,6 @@ void TextUI::instructionDelete(string content){
 }
 
 void TextUI::instructionAdd(string content){
-
     vector<string> tokens=getTokens(content, "=,() {}");
     if(tokens.size()<1) return;
 
@@ -271,8 +284,8 @@ void TextUI::instructionAdd(string content){
                 return;
             }
             else{
-                if(ComboMedia* c=dynamic_cast<ComboMedia*>(comboMediaIt->second)){
-                    ((ComboMedia*)comboMediaIt->second)->add(firstMediaIt->second);
+                if(ComboMedia* cm=dynamic_cast<ComboMedia*>(comboMediaIt->second)){
+                    cm->add(firstMediaIt->second);
 
                     cout<<">> "<<tokens[2]<<" = ";
                     NameVisitor nv;
@@ -292,18 +305,57 @@ void TextUI::instructionAdd(string content){
 
 void TextUI::instructionNameDotAction(string name, string action){
     //cout<<name<<" "<<action<<endl;
-    if(action == "area"){
+    if(action == "area?"){
         AreaVisitor av;
         _medias[name]->accept(&av);
         printf(">> %f\n", av.getArea());
     }
-    else if(action == "perimeter"){
+    else if(action == "perimeter?"){
         PerimeterVisitor pv;
         _medias[name]->accept(&pv);
         printf(">> %f\n", pv.getPerimeter());
     }
     else{
         printf("%s not %s's action.\n", action.c_str(), name.c_str());
+    }
+}
+
+void TextUI::instructionSave(string content){
+    vector<string> tokens=getTokens(content, "=,() \"{}");
+    //cout<<tokens[0]<<endl<<endl<<endl;
+    if(tokens.size()<1) return;
+
+    if(tokens.size()==3){
+        if(tokens[1]=="to"){
+            auto mediaIt=_medias.find(tokens[0]);
+            string fileName=tokens[2];
+
+            size_t firstDot = fileName.find_first_of('.');
+            if(firstDot == string::npos) return;
+            string fileExtension = fileName.substr(firstDot+1, fileName.length()-1);
+
+            if(mediaIt == _medias.end()){
+                cout<<tokens[0]<<" does not exist.\n";
+                return;
+            }
+            else if(fileExtension!="txt"){
+                cout<<"Only accept .txt\n";
+                return;
+            }
+            else{
+                ofstream fout(fileName, ios::trunc);
+                /**check file exist*/
+                if(fout){
+                    DescriptionVisitor dv;
+                    mediaIt->second->accept(&dv);
+                    NameVisitor nv;
+                    mediaIt->second->accept(&nv);
+                    fout<<dv.getDescription()<<endl<<nv.getName()<<endl;
+
+                    printf(">> %s saved to %s\n", tokens[0].c_str(), fileName.c_str());
+                }
+            }
+        }
     }
 }
 

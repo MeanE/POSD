@@ -17,6 +17,7 @@ private:
     void instructionDelete(string content);
     void instructionAdd(string content);
     void instructionNameDotAction(string name, string action);
+    void instructionSave(string content);
 
     map<string, Media*> _medias;
 };
