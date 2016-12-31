@@ -1,13 +1,13 @@
 #include "TextUI.h"
+#include "Builders.h"
+#include "Visitors.h"
+#include "Shapes.h"
 #include <sstream>
 #include <iostream>
 #include <cstring>
-#include "Builders.h"
 #include <stdio.h>
 #include <cstdlib>
 #include <algorithm>
-#include "Visitors.h"
-#include "Shapes.h"
 #include <fstream>
 #include <stack>
 
@@ -19,7 +19,8 @@ string help(){
         << "\'name.area?\' or \'name.perimeter?\'\n"
         << "\'save\' name to \"File_Name.txt\" & \'load\' \"File_Name.txt\"\n"
         << "\'add\' name to name(combo) & \'show\'\n"
-        << "\'delete\' name or name from name(combo)\n";
+        << "\'delete\' name or name from name(combo)\n"
+        << "\'Ctrl+Z\' to undo & \'Ctrl+Y\' to redo\n";
 
 	return sout.str();
 }

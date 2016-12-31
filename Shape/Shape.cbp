@@ -32,6 +32,32 @@
 					<Add option="-s" />
 				</Linker>
 			</Target>
+			<Target title="test_Debug">
+				<Option output="bin/Debug/Shape" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add library="../cppunitlite/libCppUnitLite.a" />
+				</Linker>
+			</Target>
+			<Target title="test_Release">
+				<Option output="bin/Release/Shape" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
@@ -115,7 +141,10 @@
 			<Option compile="1" />
 		</Unit>
 		<Unit filename="include/Visitors.h" />
-		<Unit filename="main.cpp" />
+		<Unit filename="main.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
 		<Unit filename="myShape.txt" />
 		<Unit filename="myShapes.txt" />
 		<Unit filename="src/AreaVisitor.cpp" />
@@ -140,6 +169,10 @@
 		<Unit filename="src/TextMedia.cpp" />
 		<Unit filename="src/TextUI.cpp" />
 		<Unit filename="src/Triangle.cpp" />
+		<Unit filename="test_main.cpp">
+			<Option target="test_Debug" />
+			<Option target="test_Release" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />
