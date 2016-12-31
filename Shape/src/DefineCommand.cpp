@@ -13,7 +13,7 @@ DefineCommand::DefineCommand(string content, map<string, Media*>* medias):_conte
 vector<string> getTokens(string content, string spliter);
 bool isDigits(const string &str);
 
-void DefineCommand::Execute(){
+void DefineCommand::execute(){
 //cout<<content<<endl;
     vector<string> tokens=getTokens(_content, "=,() {}");
 
@@ -125,12 +125,13 @@ void DefineCommand::Execute(){
     }
 }
 
-void DefineCommand::Undo(){
-
+void DefineCommand::undo(){
+    vector<string> tokens=getTokens(_content, "=,() {}");
+    _medias->erase(tokens[0]);
 }
 
-void DefineCommand::Redo(){
-
+void DefineCommand::redo(){
+    execute();
 }
 
 

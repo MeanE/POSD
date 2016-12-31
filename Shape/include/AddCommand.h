@@ -9,9 +9,9 @@ class AddCommand : public Command
 public:
     AddCommand();
     ~AddCommand();
-    void Execute();
-    void Undo();
-    void Redo();
+    void execute();
+    void undo();
+    void redo();
 
 private:
 };

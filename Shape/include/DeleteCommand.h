@@ -9,9 +9,9 @@ class DeleteCommand : public Command
 public:
     DeleteCommand();
     ~DeleteCommand();
-    void Execute();
-    void Undo();
-    void Redo();
+    void execute();
+    void undo();
+    void redo();
 
 private:
 };

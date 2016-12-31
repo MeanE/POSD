@@ -12,9 +12,9 @@ class DefineCommand : public Command
 public:
     DefineCommand(string content, map<string, Media*>* medias);
     ~DefineCommand(){}
-    void Execute();
-    void Undo();
-    void Redo();
+    void execute();
+    void undo();
+    void redo();
 
 private:
     string _content;

@@ -9,9 +9,9 @@ class CommandManager
 {
 public:
     CommandManager();
-    void ExecuteCMD(Command *cmd);
-    void UndoCMD();
-    void RedoCMD();
+    void executeCMD(Command *cmd);
+    void undoCMD();
+    void redoCMD();
 
 private:
     stack<Command*> undocmds;

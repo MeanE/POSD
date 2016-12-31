@@ -2,23 +2,23 @@
 
 CommandManager::CommandManager(){}
 
-void CommandManager::ExecuteCMD(Command *cmd){
+void CommandManager::executeCMD(Command *cmd){
     undocmds.push(cmd);
-    cmd->Execute();
+    cmd->execute();
 }
 
-void CommandManager::UndoCMD(){
+void CommandManager::undoCMD(){
     if(!undocmds.empty()){
         redocmds.push(undocmds.top());
-        undocmds.top()->Undo();
+        undocmds.top()->undo();
         undocmds.pop();
     }
 }
 
-void CommandManager::RedoCMD(){
+void CommandManager::redoCMD(){
     if(!redocmds.empty()){
         undocmds.push(redocmds.top());
-        redocmds.top()->Redo();
+        redocmds.top()->redo();
         redocmds.pop();
     }
 }
