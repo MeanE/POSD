@@ -63,10 +63,22 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="UnitCommand.h">
+			<Option compile="1" />
+			<Option target="test_Debug" />
+			<Option target="test_Release" />
+		</Unit>
 		<Unit filename="UnitMedia.h">
 			<Option compile="1" />
+			<Option target="test_Debug" />
+			<Option target="test_Release" />
 		</Unit>
 		<Unit filename="UnitShapes.h">
+			<Option compile="1" />
+			<Option target="test_Debug" />
+			<Option target="test_Release" />
+		</Unit>
+		<Unit filename="include/AddCommand.h">
 			<Option compile="1" />
 		</Unit>
 		<Unit filename="include/AreaVisitor.h">
@@ -84,7 +96,20 @@
 		<Unit filename="include/ComboMediaBuilder.h">
 			<Option compile="1" />
 		</Unit>
+		<Unit filename="include/Command.h">
+			<Option compile="1" />
+		</Unit>
+		<Unit filename="include/CommandManager.h">
+			<Option compile="1" />
+		</Unit>
+		<Unit filename="include/Commands.h" />
 		<Unit filename="include/Compute.h">
+			<Option compile="1" />
+		</Unit>
+		<Unit filename="include/DefineCommand.h">
+			<Option compile="1" />
+		</Unit>
+		<Unit filename="include/DeleteCommand.h">
 			<Option compile="1" />
 		</Unit>
 		<Unit filename="include/DescriptionVisitor.h">
@@ -147,11 +172,16 @@
 		</Unit>
 		<Unit filename="myShape.txt" />
 		<Unit filename="myShapes.txt" />
+		<Unit filename="src/AddCommand.cpp" />
 		<Unit filename="src/AreaVisitor.cpp" />
 		<Unit filename="src/Circle.cpp" />
 		<Unit filename="src/ComboMedia.cpp" />
 		<Unit filename="src/ComboMediaBuilder.cpp" />
+		<Unit filename="src/Command.cpp" />
+		<Unit filename="src/CommandManager.cpp" />
 		<Unit filename="src/Compute.cpp" />
+		<Unit filename="src/DefineCommand.cpp" />
+		<Unit filename="src/DeleteCommand.cpp" />
 		<Unit filename="src/DescriptionVisitor.cpp" />
 		<Unit filename="src/Document.cpp" />
 		<Unit filename="src/Media.cpp" />
