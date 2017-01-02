@@ -22,7 +22,7 @@ private:
     void instructionLoad(string content);
 
     map<string, Media*> _medias;
-    CommandManager _cm;
+    CommandManager _commandManager;
 };
 
 #endif // TEXTUI_H
