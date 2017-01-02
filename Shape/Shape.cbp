@@ -32,15 +32,53 @@
 					<Add option="-s" />
 				</Linker>
 			</Target>
+			<Target title="test_Debug">
+				<Option output="bin/Debug/Shape" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add library="../cppunitlite/libCppUnitLite.a" />
+				</Linker>
+			</Target>
+			<Target title="test_Release">
+				<Option output="bin/Release/Shape" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="UnitCommand.h">
+			<Option compile="1" />
+			<Option target="test_Debug" />
+			<Option target="test_Release" />
+		</Unit>
 		<Unit filename="UnitMedia.h">
 			<Option compile="1" />
+			<Option target="test_Debug" />
+			<Option target="test_Release" />
 		</Unit>
 		<Unit filename="UnitShapes.h">
+			<Option compile="1" />
+			<Option target="test_Debug" />
+			<Option target="test_Release" />
+		</Unit>
+		<Unit filename="include/AddCommand.h">
 			<Option compile="1" />
 		</Unit>
 		<Unit filename="include/AreaVisitor.h">
@@ -58,7 +96,22 @@
 		<Unit filename="include/ComboMediaBuilder.h">
 			<Option compile="1" />
 		</Unit>
-		<Unit filename="include/Compute.h" />
+		<Unit filename="include/Command.h">
+			<Option compile="1" />
+		</Unit>
+		<Unit filename="include/CommandManager.h">
+			<Option compile="1" />
+		</Unit>
+		<Unit filename="include/Commands.h" />
+		<Unit filename="include/Compute.h">
+			<Option compile="1" />
+		</Unit>
+		<Unit filename="include/DefineCommand.h">
+			<Option compile="1" />
+		</Unit>
+		<Unit filename="include/DeleteCommand.h">
+			<Option compile="1" />
+		</Unit>
 		<Unit filename="include/DescriptionVisitor.h">
 			<Option compile="1" />
 		</Unit>
@@ -113,14 +166,22 @@
 			<Option compile="1" />
 		</Unit>
 		<Unit filename="include/Visitors.h" />
-		<Unit filename="main.cpp" />
+		<Unit filename="main.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
 		<Unit filename="myShape.txt" />
 		<Unit filename="myShapes.txt" />
+		<Unit filename="src/AddCommand.cpp" />
 		<Unit filename="src/AreaVisitor.cpp" />
 		<Unit filename="src/Circle.cpp" />
 		<Unit filename="src/ComboMedia.cpp" />
 		<Unit filename="src/ComboMediaBuilder.cpp" />
+		<Unit filename="src/Command.cpp" />
+		<Unit filename="src/CommandManager.cpp" />
 		<Unit filename="src/Compute.cpp" />
+		<Unit filename="src/DefineCommand.cpp" />
+		<Unit filename="src/DeleteCommand.cpp" />
 		<Unit filename="src/DescriptionVisitor.cpp" />
 		<Unit filename="src/Document.cpp" />
 		<Unit filename="src/Media.cpp" />
@@ -138,6 +199,10 @@
 		<Unit filename="src/TextMedia.cpp" />
 		<Unit filename="src/TextUI.cpp" />
 		<Unit filename="src/Triangle.cpp" />
+		<Unit filename="test_main.cpp">
+			<Option target="test_Debug" />
+			<Option target="test_Release" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />
