@@ -9,6 +9,7 @@ using namespace std;
 
 class AddCommand : public Command
 {
+    friend void copyMap(AddCommand &ac);
 public:
     AddCommand(string content, map<string, Media*>* medias);
     ~AddCommand(){}

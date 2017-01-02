@@ -111,7 +111,7 @@ TEST (Redo, DefineCommand) {
         Media* m = it.second;
         DescriptionVisitor dv;
         m->accept(&dv);
-        cout<<dv.getDescription()<<endl;
+        //cout<<dv.getDescription()<<endl;
         CHECK(description[i++] == dv.getDescription());
     }
 }
@@ -256,6 +256,199 @@ TEST (Redo, AddCommand) {
         "combo(c(2 1 1) c(3 2 1) )"
     };
 
+    int i=0;
+    for(auto it: medias){
+        Media* m = it.second;
+        DescriptionVisitor dv;
+        m->accept(&dv);
+        //cout<<dv.getDescription()<<endl;
+        CHECK(description[i++] == dv.getDescription());
+    }
+}
+
+TEST (Execute_DeleteFromCombo, DeleteCommand) {
+    cout<<"TestDeleteCommand_Execute_DeleteFromCombo---------------\n";
+    /**c(2 1 1)
+     * c(3 2 1)
+     * combo(c(2 1 1) )
+     * combo(c(3 2 1) )*/
+    map<string, Media*> medias;
+    Circle cir1(2,1,1,"cSmall");
+    Circle cir2(3,2,1,"cMale");
+    ShapeMediaBuilder smb;
+    smb.buildShapeMedia(&cir1);
+    medias["cSmall"]=smb.getMedia();
+    smb.buildShapeMedia(&cir2);
+    medias["cMale"]=smb.getMedia();
+    ComboMediaBuilder cmb;
+    cmb.buildComboMedia("comboExclamation");
+    cmb.buildShapeMedia(&cir1);
+    medias["comboExclamation"]=cmb.getMedia();
+    cmb.buildComboMedia("combo2");
+    cmb.buildShapeMedia(&cir2);
+    medias["combo2"]=cmb.getMedia();
+
+    /**delete cSmall from comboExclamation*/
+    string content[]={
+        "cSmall from comboExclamation"
+    };
+    DeleteCommand dc(content[0], &medias);
+    dc.execute();
+
+    /**STL map default use ascending sort by key*/
+    string description[]={
+        "c(3 2 1) ",
+        "c(2 1 1) ",
+        "combo(c(3 2 1) )",
+        "combo()"
+    };
+
+    //cout<<medias.size()<<endl;
+    int i=0;
+    for(auto it: medias){
+        Media* m = it.second;
+        DescriptionVisitor dv;
+        m->accept(&dv);
+        //cout<<dv.getDescription()<<endl;
+        CHECK(description[i++] == dv.getDescription());
+    }
+}
+
+TEST (Execute_DeleteAll, DeleteCommand) {
+    cout<<"TestDeleteCommand_Execute_DeleteAll---------------\n";
+    /**c(2 1 1)
+     * c(3 2 1)
+     * combo(c(2 1 1) )
+     * combo(c(3 2 1) )*/
+    map<string, Media*> medias;
+    Circle cir1(2,1,1,"cSmall");
+    Circle cir2(3,2,1,"cMale");
+    ShapeMediaBuilder smb;
+    smb.buildShapeMedia(&cir1);
+    medias["cSmall"]=smb.getMedia();
+    smb.buildShapeMedia(&cir2);
+    medias["cMale"]=smb.getMedia();
+    ComboMediaBuilder cmb;
+    cmb.buildComboMedia("comboExclamation");
+    cmb.buildShapeMedia(&cir1);
+    medias["comboExclamation"]=cmb.getMedia();
+    cmb.buildComboMedia("combo2");
+    cmb.buildShapeMedia(&cir2);
+    medias["combo2"]=cmb.getMedia();
+
+    /**delete cSmall from comboExclamation*/
+    string content[]={
+        "cSmall"
+    };
+    DeleteCommand dc(content[0], &medias);
+    dc.execute();
+
+    /**STL map default use ascending sort by key*/
+    string description[]={
+        "c(3 2 1) ",
+        "combo(c(3 2 1) )",
+        "combo()"
+    };
+
+    //cout<<medias.size()<<endl;
+    int i=0;
+    for(auto it: medias){
+        Media* m = it.second;
+        DescriptionVisitor dv;
+        m->accept(&dv);
+        //cout<<dv.getDescription()<<endl;
+        CHECK(description[i++] == dv.getDescription());
+    }
+}
+
+TEST (Undo, DeleteCommand) {
+    cout<<"TestDeleteCommand_Undo---------------\n";
+    /**c(2 1 1)
+     * c(3 2 1)
+     * combo(c(2 1 1) )
+     * combo(c(3 2 1) )*/
+    map<string, Media*> medias;
+    Circle cir1(2,1,1,"cSmall");
+    Circle cir2(3,2,1,"cMale");
+    ShapeMediaBuilder smb;
+    smb.buildShapeMedia(&cir1);
+    medias["cSmall"]=smb.getMedia();
+    smb.buildShapeMedia(&cir2);
+    medias["cMale"]=smb.getMedia();
+    ComboMediaBuilder cmb;
+    cmb.buildComboMedia("comboExclamation");
+    cmb.buildShapeMedia(&cir1);
+    medias["comboExclamation"]=cmb.getMedia();
+    cmb.buildComboMedia("combo2");
+    cmb.buildShapeMedia(&cir2);
+    medias["combo2"]=cmb.getMedia();
+
+    /**delete cSmall from comboExclamation*/
+    string content[]={
+        "cSmall"
+    };
+    DeleteCommand dc(content[0], &medias);
+    dc.execute();
+    dc.undo();
+
+    /**STL map default use ascending sort by key*/
+    string description[]={
+        "c(3 2 1) ",
+        "c(2 1 1) ",
+        "combo(c(3 2 1) )",
+        "combo(c(2 1 1) )"
+    };
+
+    //cout<<medias.size()<<endl;
+    int i=0;
+    for(auto it: medias){
+        Media* m = it.second;
+        DescriptionVisitor dv;
+        m->accept(&dv);
+        //cout<<dv.getDescription()<<endl;
+        CHECK(description[i++] == dv.getDescription());
+    }
+}
+
+TEST (Redo, DeleteCommand) {
+    cout<<"TestDeleteCommand_Redo---------------\n";
+    /**c(2 1 1)
+     * c(3 2 1)
+     * combo(c(2 1 1) )
+     * combo(c(3 2 1) )*/
+    map<string, Media*> medias;
+    Circle cir1(2,1,1,"cSmall");
+    Circle cir2(3,2,1,"cMale");
+    ShapeMediaBuilder smb;
+    smb.buildShapeMedia(&cir1);
+    medias["cSmall"]=smb.getMedia();
+    smb.buildShapeMedia(&cir2);
+    medias["cMale"]=smb.getMedia();
+    ComboMediaBuilder cmb;
+    cmb.buildComboMedia("comboExclamation");
+    cmb.buildShapeMedia(&cir1);
+    medias["comboExclamation"]=cmb.getMedia();
+    cmb.buildComboMedia("combo2");
+    cmb.buildShapeMedia(&cir2);
+    medias["combo2"]=cmb.getMedia();
+
+    /**delete cSmall from comboExclamation*/
+    string content[]={
+        "cSmall"
+    };
+    DeleteCommand dc(content[0], &medias);
+    dc.execute();
+    dc.undo();
+    dc.redo();
+
+    /**STL map default use ascending sort by key*/
+    string description[]={
+        "c(3 2 1) ",
+        "combo(c(3 2 1) )",
+        "combo()"
+    };
+
+    //cout<<medias.size()<<endl;
     int i=0;
     for(auto it: medias){
         Media* m = it.second;
