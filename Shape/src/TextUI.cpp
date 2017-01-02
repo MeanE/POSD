@@ -30,12 +30,22 @@ void TextUI::run(){
         cout<< ":- ";
         string userInput;
         getline(cin,userInput);
-        //cout<<input<<endl;
+        //cout<<userInput<<endl;
+        if(cin.eof()){ ///Ctrl+Z
+            cout<<">> Ctrl+Z(Undo)\n";
+        }
         analysisInstructions(userInput);
+        cin.clear();
+
     }
 }
 
 void TextUI::analysisInstructions(string userInput){
+    string asciiCtrlY; asciiCtrlY=(char)25;
+    if(userInput == asciiCtrlY){
+        cout<<">> Ctrl+Y(Redo)\n";
+        return;
+    }
     if(userInput == "show"){
         instructionShow();
         return;

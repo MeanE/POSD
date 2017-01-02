@@ -8,7 +8,6 @@ using namespace std;
 class CommandManager
 {
 public:
-    CommandManager();
     void executeCMD(Command *cmd);
     void undoCMD();
     void redoCMD();

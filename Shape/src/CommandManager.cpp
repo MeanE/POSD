@@ -1,7 +1,5 @@
 #include "CommandManager.h"
 
-CommandManager::CommandManager(){}
-
 void CommandManager::executeCMD(Command *cmd){
     undocmds.push(cmd);
     cmd->execute();

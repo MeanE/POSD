@@ -2,6 +2,7 @@
 #define TEXTUI_H
 
 #include "Medias.h"
+#include "CommandManager.h"
 #include <map>
 using namespace std;
 
@@ -21,6 +22,7 @@ private:
     void instructionLoad(string content);
 
     map<string, Media*> _medias;
+    CommandManager _cm;
 };
 
 #endif // TEXTUI_H
